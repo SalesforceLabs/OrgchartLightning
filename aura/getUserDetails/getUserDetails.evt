@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Get user details for selected User">
+    <aura:attribute name="selUserId" type="String" description="Selected User Id"/>
+</aura:event>

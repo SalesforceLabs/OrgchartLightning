@@ -1,0 +1,13 @@
+.THIS .slds-form-element__label{
+    display:none;
+}
+
+.THIS .button_css{
+    border-radius: 50%;
+    background-color: rgb(0, 109, 204);
+    color: white;
+}
+
+.THIS .slds-input{
+    border-radius: 20px;
+}

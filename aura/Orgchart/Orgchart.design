@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="placeHolder" label="Device" datasource="Desktop,Mobile"   /> 
+    <design:attribute name="height"  label="Height" default="100vh"/>
+    
+</design:component>

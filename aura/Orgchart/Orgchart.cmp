@@ -1,0 +1,308 @@
+<aura:component controller="OrgChartClass"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <aura:attribute name="width" type="String" description=" width of parent region" />
+    <aura:attribute name="height" type="String" description="height of parent region" default="100vh" access="global" />
+
+    <lightning:flexipageRegionInfo width="{!v.width}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="divHeight" type="Integer" default="300" />
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}" />
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}" />
+    <aura:attribute name="Spinner" type="boolean" default="false" />
+  <!--  <ltng:require scripts="{!$Resource.jquery}" afterScriptsLoaded="{!c.loadJquery}" /> -->
+
+    <aura:attribute name="chartData" type="Map" />
+    <aura:attribute name="reporteesData" type="Map" />
+    <aura:attribute name="placeHolder" type="String" access="global"/>
+    <aura:attribute name="allReportees" type="Map" />
+    <aura:attribute name="allManagers" type="Map" />
+    <aura:attribute name="initialReportees" type="Map" />
+    <aura:attribute name="moreReporteesCount" type="string" />
+    <aura:attribute name="searchId" type="string" />
+    <aura:attribute name="moreReportees" type="Map" />
+    <aura:attribute name="isMoreReportees" type="boolean" default="false" />
+    <aura:attribute name="openModal" type="boolean" default="false" />
+    <aura:attribute name="selectedUserId" type="string" default="0050b000005Nn4nAAC" />
+    <aura:attribute name="loginUserId" type="string" />
+    <aura:attribute name="prevDisabled" type="string" default="true" />
+    <aura:attribute name="nextDisabled" type="string" default="false" />
+    <aura:attribute name="left-icon-color" type="string" default="icon-color" />
+    <aura:attribute name="right-icon-color" type="string" default="arrow-icon" />
+    <aura:attribute name="selectedUserIdx" type="Integer" />
+    <aura:handler name="userDetailsCmpEvent" event="c:getUserDetails" action="{!c.handleUserDetails}" />
+    <aura:handler event="aura:doneRendering" value="{!this}" action="{!c.onRender}" />
+    <!-- <div aura:id="bodyComp"  class="bodyContainer" style="{! 'height:'+v.divHeight+'px;position:relative;overflow-y:hidden;'}"> -->
+
+    <div id="bodyId"
+        style="{! 'height:'+v.height+';position:relative;overflow-y:hidden;overflow-x:hidden;background-color:white;'}">
+
+        <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.openModal}">
+            <!--Modal Box Start-->
+            <div role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container modal_container">
+                    <div class="slds-modal__header modal_header">
+                        <div class="paddingRight">
+                            <div class=" slds-card__header1 slds-grid sldsHeader"
+                                style="margin-top:0px;justify-content:space-between;padding-left:0px;padding-right:0px;">
+                                <aura:if isTrue="{!empty(v.chartData.selectedUser.Phone) || v.selectedUserId == v.loginUserId}">
+                                    <div class="phone">
+                                        <a href="javascript:void(0);"> <img src="{!$Resource.EMIcons  + '/phone.png'}"
+                                                style="max-width:57%" width="90" /></a>
+                                    </div>
+                                    <aura:set attribute="else">
+                                        <div class="phone">
+                                            <a href="{!'tel:'+v.chartData.selectedUser.Phone}"> <img
+                                                    src="{!$Resource.EMIcons  + '/phone.png'}" style="max-width:57%"
+                                                    width="90" /></a>
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+                                <lightning:buttonIcon iconName="utility:chevronleft" aura:id="prevPeer_1"
+                                    class="arrow-icon" name="left" size="large" variant="bare"
+                                    alternativeText="View More" onclick="{!c.previousPeer}" disabled="{!v.prevDisabled}"
+                                    value="2" />
+                                <a href="{!'/lightning/r/User/'+v.chartData.selectedUser.Id+'/view'}"
+                                    target="_blank"> <img class="profile-img1" src="{!v.chartData.selectedUser.FullPhotoUrl}" />
+                                </a>
+                                <lightning:buttonIcon iconName="utility:chevronright" class="arrow-icon"
+                                    aura:id="nextPeer_1" name="right" size="large" variant="bare"
+                                    alternativeText="View More" onclick="{!c.nextPeer}" disabled="{!v.nextDisabled}"
+                                    value="2" />
+                                <aura:if
+                                    isTrue="{!empty(v.chartData.selectedUser.Email) || v.selectedUserId == v.loginUserId}">
+                                    <div class="mail" style="opacity:0.5;">
+                                        <a href="javascript:void(0);"> <img src="{!$Resource.EMIcons  + '/mail.png'}"
+                                                style="max-width:57%" width="90" /></a>
+                                    </div>
+                                    <aura:set attribute="else">
+                                        <div class="mail" style="text-align:left;">
+                                            <a href="{!'mailto:'+v.chartData.selectedUser.Email}"> <img
+                                                    src="{!$Resource.EMIcons  + '/mail.png'}" style="max-width:57%"
+                                                    width="90" /></a>
+                                        </div>
+                                    </aura:set>
+
+                                </aura:if>
+                            </div>
+                            <div class="slds-card__header slds-grid sldsHeader selected_user" >
+                                <span class="caption span-name selected_user">{!v.chartData.selectedUser.Name}</span>
+                            </div>
+                            <div class="slds-card__header slds-grid sldsHeader">
+                                <span class="caption span-name">{!v.chartData.selectedUser.Title}</span>
+                            </div>
+
+                            <div class="slds-card__header slds-grid sldsHeader" style="justify-content:left;">
+                                <span class="caption span-name"><button class="slds-button"
+                                        onclick="{!c.handleCloseModal}">Back</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal Box Header-->
+
+                    <ui:scrollerWrapper class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-scrollable">
+                            <ul class="slds-has-dividers_bottom-space">
+
+                                <aura:iteration items="{!v.allReportees}" var="moreReportee" indexVar="index">
+                                    <li class="slds-item" data-userid="{!moreReportee.Id}" onclick="{!c.renderView}">
+                                        <lightning:tile label="{!moreReportee.Name}" href="javascript:void(0)">
+                                            <aura:set attribute="media">
+                                                <img class="profile-img-down" src="{!moreReportee.FullPhotoUrl}" />
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item">{!moreReportee.Title}</li>
+                                            </ul>
+                                        </lightning:tile>
+                                    </li>
+
+
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </ui:scrollerWrapper>
+                    <!--Modal Box Button-->
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </aura:if>
+
+        <div class="slds-grid">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="exportMenu">
+                    <lightning:buttonMenu aura:id="menu" onselect="{! c.handleSelect }" alternativeText="Show menu">
+                        <lightning:menuItem value="exportCSV" label="Export CSV" />
+                    </lightning:buttonMenu>
+                </div>
+                <c:UserLookup />
+            </div>
+
+        </div>
+
+
+        <div class="top-absolute">
+            <ui:scrollerWrapper class="scrollHierarchy" aura:Id="managerScroll1">
+                <aura:iteration items="{!v.allManagers}" var="moreReportee">
+                    <div class="outerScroll">
+                        <div class="innerScroll">
+                            <div class="slds-card__header slds-grid sldsHeader">
+                                <img class="profile-img row-circle" data-userid="{!moreReportee.Id}"
+                                    onclick="{!c.renderView}" src="{!moreReportee.FullPhotoUrl}" />
+                                <br />
+
+                            </div>
+                            <div class="slds-card__header slds-grid sldsHeader">
+                                <span class="caption span-name">{!moreReportee.Name}</span>
+                            </div>
+                            <div class="line_seperator1"></div>
+                        </div>
+
+                        <div class="line_seperator"></div>
+                    </div>
+                    <div class="line_seperator"></div>
+                </aura:iteration>
+            </ui:scrollerWrapper>
+            <aura:if isTrue="{!v.placeHolder=='Desktop'}">
+                <div class="managers">
+                    <article class="slds-card">
+                        <div class="slds-card__header slds-grid">
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__legend">Reportee Hierarcy</legend>
+                                <div class="slds-form-element__control">
+                                    <aura:iteration items="{!v.allManagers}" var="reportee">
+                                        <a href="javascript:void(0);"> <span class="slds-radio" style="padding:3px;"
+                                                data-userid="{!reportee.Id}" onclick="{!c.renderView}">
+                                                <span>
+                                                    <p>
+                                                        {!reportee.Name}
+                                                    </p>
+                                                </span>
+                                            </span></a>
+                                    </aura:iteration>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="slds-card__body"></div>
+                        <footer class="slds-card__footer"></footer>
+                    </article>
+                </div>
+                <div class="peers">
+                    <article class="slds-card">
+                        <div class="slds-card__header slds-grid">
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__legend">Peers</legend>
+                                <div class="slds-form-element__control">
+                                    <aura:iteration items="{!v.chartData.peers}" var="peers">
+                                        <a href="javascript:void(0);"> <span class="slds-radio" style="padding:3px;"
+                                                data-userid="{!peers.Id}" onclick="{!c.renderView}">
+                                                <span>
+                                                    <p style="">{!peers.Name}</p>
+                                                </span>
+                                            </span></a>
+                                    </aura:iteration>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="slds-card__body"></div>
+                        <footer class="slds-card__footer"></footer>
+                    </article>
+                </div>
+            </aura:if>
+        </div>
+
+        <div class="bottom-absolute">
+            <div style="left:0;bottom: 0;width:100%;text-align:left">
+                <div class="paddingRight">
+                    <div class=" slds-card__header1 slds-grid sldsHeader"
+                        style="margin-top:0px;justify-content:space-between;padding-left:0px;padding-right:0px;">
+                        <aura:if
+                            isTrue="{!empty(v.chartData.selectedUser.Phone) || v.selectedUserId == v.loginUserId }">
+
+                            <div class="phone" style="margin-left:0px;opacity:0.5;">
+                                <a href="javascript:void(0);"> <img src="{!$Resource.EMIcons  + '/phone.png'}"
+                                        style="max-width:57%" width="90" /></a>
+                            </div>
+                            <aura:set attribute="else">
+                                <div class="phone" style="margin-left:0px;">
+                                    <a href="{!'tel:'+v.chartData.selectedUser.Phone}"> <img
+                                            src="{!$Resource.EMIcons  + '/phone.png'}" style="max-width:57%"
+                                            width="90" /></a>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                        <lightning:buttonIcon iconName="utility:chevronleft" aura:id="prevPeer_2" class="arrow-icon"
+                            name="left" size="large" variant="bare" alternativeText="View More"
+                            onclick="{!c.previousPeer}" disabled="{!v.prevDisabled}" value="2" />
+                        <a href="{!'/lightning/r/User/'+v.chartData.selectedUser.Id+'/view'}"
+                            target="_blank"> <img class="profile-img1"
+                                src="{!v.chartData.selectedUser.FullPhotoUrl}" />
+                        </a>
+                        <lightning:buttonIcon iconName="utility:chevronright" class="arrow-icon" aura:id="nextPeer_2"
+                            name="right" size="large" variant="bare" alternativeText="View More" onclick="{!c.nextPeer}"
+                            disabled="{!v.nextDisabled}" value="2" />
+                        <aura:if isTrue="{!empty(v.chartData.selectedUser.Email) || v.selectedUserId == v.loginUserId}">
+                            <div class="mail" style="opacity:0.5;">
+                                <a href="javascript:void(0);"> <img src="{!$Resource.EMIcons  + '/mail.png'}"
+                                        style="max-width:57%" width="90" /></a>
+                            </div>
+                            <aura:set attribute="else">
+                                <div class="mail">
+                                    <a href="{!'mailto:'+v.chartData.selectedUser.Email}"> <img
+                                            src="{!$Resource.EMIcons  + '/mail.png'}" style="max-width:57%"
+                                            width="90" /></a>
+                                </div>
+                            </aura:set>
+
+                        </aura:if>
+                    </div>
+                    <div class="slds-card__header slds-grid sldsHeader main_selected_user" >
+                        <span class="caption span-name selected_user" >{!v.chartData.selectedUser.Name}</span>
+                    </div>
+                    <div class="slds-card__header slds-grid sldsHeader">
+                        <span class="caption span-name">{!v.chartData.selectedUser.Title}</span>
+                    </div>
+
+                </div>
+                <div class="slds-card__header slds-grid sldsHeader-search main_more_reportees">
+                    <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                        <aura:iteration items="{!v.initialReportees}" var="objReportee" indexVar="index">
+                            <div class="more_reportees" data-userid="{!objReportee.Id}"
+                                onclick="{!c.renderView}">
+                                <div class="slds-card__header slds-grid sldsHeader">
+                                    <img class="profile-img-down" src="{!objReportee.FullPhotoUrl}" />
+                                </div>
+                                <div class="slds-card__header slds-grid sldsHeader" style="width:100%">
+                                    <span class="caption span-name"> {!objReportee.FirstName}</span>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                        <aura:if isTrue="{!v.isMoreReportees}">
+                            <div class="more_reportees">
+                                <div class="slds-card__header slds-grid sldsHeader">
+                                    <div id="circle" onclick="{!c.handleOpenModal}">
+                                        <span class="innerTEXT"> +{!v.moreReporteesCount}</span>
+                                    </div>
+                                </div>
+                                <div class="slds-card__header slds-grid sldsHeader" style="width:100%">
+                                    <span class="caption span-name">more</span>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

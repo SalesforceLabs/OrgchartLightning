@@ -1,0 +1,26 @@
+<aura:component controller="OrgChartClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="searchResults" type="List"/>
+    <aura:attribute name="searchWidth" type="String" default="auto"/>
+    <aura:attribute name="searchTxt" type="String" default=""/>
+    <aura:attribute name="searchPadding" type="String" default="38%"/>
+    <aura:registerEvent name="userDetailsCmpEvent" type="c:getUserDetails"/>
+    
+    <!-- <div style="{!'width:'+v.searchWidth+';padding-left: '+v.searchPadding+';'}"> -->
+    <div style="text-align:center;background-color:white;padding-top:10px;padding-bottom:10px;">
+        <lightning:input value="{!v.searchTxt}"  style="{!'width:'+v.searchWidth+';display:inline-block'}"  aura:id="searchInput" label="" onclick="{!c.highlightSearch}"  onchange="{!c.findUser}" placeholder="Search by Name" class="txtField" />
+        <lightning:buttonIcon class="button_css"  iconName="utility:search"  alternativeText="Search" onclick="{!c.unhighlightSearch}" />
+    </div>
+    <aura:if isTrue="{!v.searchResults.length > 0 || v.searchWidth == '100%'}">		 
+        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" style="height:100%;opacity:0.7;" role="presentation">
+            <aura:iteration items="{!v.searchResults}" var="user">
+                <li role="presentation" class="slds-listbox__item" style="width:100%;margin:auto;">
+                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                        <span class="slds-media__body">
+                            <a onclick="{!c.fireUserDetailsEvt}" data-placeid="{!user.Id}">{!user.Name}</a>
+                        </span>
+                    </div>
+                </li>
+            </aura:iteration>
+        </ul> 	 
+    </aura:if>
+</aura:component>

@@ -1,0 +1,598 @@
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+/*
+.THIS .scrollable::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.THIS .scrollable::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.THIS .scrollable::-webkit-scrollbar-thumb
+{
+	background-color: #f5f5f5;
+}
+
+.THIS .top-absolute::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px white;
+	background-color: #F5F5F5;
+}
+
+.THIS .top-absolute::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: 	white;
+}
+
+.THIS .top-absolute::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}
+*/
+
+@media only screen and (min-width: 1281px) {
+   
+    .THIS .mobileView{
+        display: none;
+    }
+    
+    .THIS .managers{
+        display:block;
+        left:2%;
+         width:15%;
+        float:left;
+        position: absolute;
+        vertical-align: middle;
+        top: 10%;
+        color:rgb(0, 112, 210);
+         height: 250px; 
+        overflow-y: hidden;
+        text-align:left;
+        border:1px solid #ccc;
+    }
+     .THIS .managers article
+    {
+        height: 100%;
+        border:0px!important;
+        box-shadow: unset;
+    }
+    .THIS .managers legend
+    {
+    	padding:3px;
+        font-weight:bold;
+        text-decoration: underline;
+    }
+     .THIS .managers:hover{
+        overflow-y:scroll;
+    }
+    .THIS .managers p
+	{
+   	    width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+    .THIS .peers{
+        display:block;
+        left:83%;
+         width:15%;
+        float:right;
+        position: absolute;
+        vertical-align: middle;
+        top: 10%;
+        color:rgb(0, 112, 210);
+         height: 250px; 
+        overflow-y: hidden;
+        overflow-x:hidden;
+        text-align:left;
+        border:1px solid #ccc
+    }
+     .THIS .peers:hover{
+        overflow-y:scroll;
+    }
+    
+    .THIS .peers article
+    {
+        height: 100%;
+        border:0px!important;
+        box-shadow: unset;
+    }
+     .THIS .peers legend
+    {
+    	padding:3px;
+        font-weight:bold;
+        text-decoration: underline;
+    }
+    .THIS .peers p
+    {
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+   
+    .THIS .managers{
+        display:block;
+        left:2%;
+        width:15%;
+        float:left;
+        position: absolute;
+        vertical-align: middle;
+        top: 10%;
+        color:rgb(0, 112, 210);
+         height: 250px; 
+        overflow-y: hidden;
+    }
+     .THIS .managers article
+    {
+        height: 100%;
+        border:0px!important;
+        box-shadow: unset;
+    }
+     .THIS .managers legend
+    {
+    	padding:3px;
+        font-weight:bold;
+        text-decoration: underline;
+    }
+     .THIS .managers:hover{
+        overflow-y:scroll;
+    }
+    .THIS .managers p
+	{
+   	    width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+    .THIS .peers{
+        display:block;
+        left:83%;
+        width:15%;
+        float:right;
+        position: absolute;
+        vertical-align: middle;
+        top: 10%;
+        color:rgb(0, 112, 210);
+         height: 250px; 
+        overflow-y: hidden;
+        border:1px solid #ccc
+    }
+    .THIS .peers:hover{
+        overflow-y:scroll;
+    }
+     .THIS .peers article
+    {
+        height: 100%;
+        border:0px!important;
+        box-shadow: unset;
+    }
+     .THIS .peers legend
+    {
+    	padding:3px;
+        font-weight:bold;
+        text-decoration: underline;
+    }
+    .THIS .peers p
+    {
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+     .THIS .managers{
+        display:none;
+    }
+    .THIS .peers{
+        display:none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+     .THIS .managers{
+        display:none;
+    }
+    .THIS .peers{
+        display:none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+     .THIS .managers{
+        display:none;
+    }
+    .THIS .peers{
+        display:none;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+     .THIS .managers{
+        display:none;
+    }
+    .THIS .peers{
+        display:none;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+     .THIS .managers{
+        display:none;
+    }
+    .THIS .peers{
+        display:none;
+    }
+}
+
+.THIS .top-absolute{
+    background-color: #fff;
+    text-align: center;
+    width: 100%;
+    overflow-y: hidden;
+    height: calc(100% - 275px);
+    position: absolute;
+    -webkit-transform: translate3D(0,0,-1px);
+    transform: translate3D(0,0,-1px);
+}
+.THIS .exportButton{
+    padding:0px;
+    border-radius: 0px;
+    border:0px;
+    margin-left: 90%;
+    margin-top: 10px;
+}
+.THIS .bottom-absolute{
+	text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+    height: 275px;
+}
+
+
+.THIS .sldsHeader{
+    align-items:center;
+    justify-content:center;
+    padding-top:0px;
+    padding-bottom:0px;
+    margin-bottom:0px;
+}
+
+.THIS.bodyContainer{
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+
+.THIS .arrow-icon{
+    color:#1D62A9;
+    margin-top: 0px;
+    
+}
+.THIS .sldsHeader-search{
+    align-items:center;
+    justify-content:center;
+}
+
+.THIS .profile-img
+{
+    position:relative;
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    z-index:1;
+    
+}
+
+.THIS .profile-img1{
+    position:relative;
+    border-radius:50%;
+    z-index:1;
+    margin-top:0px;
+    height:100px;
+    width:100px;
+    background-color:#15a5d5;
+    border: 4px solid #fff;
+    box-shadow: 0 0 0 2px #15a5d5;
+}
+.THIS .profile-img-down
+{
+    position:relative;
+    height:40px;
+    width:40px;
+    border-radius:50%;
+    z-index:1;
+}
+.THIS .row-circle:before {
+    content: '';
+    width: 2px;
+    height: 50px;
+    border-left:1px dashed;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: 25px;
+}
+
+.THIS .span-name
+{
+    position: relative;
+    color:#1D62A9;
+    font-size:x-small;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    overflow:hidden;
+}
+
+.THIS .logo
+{
+    height: 50px;
+    width: 70px;
+    position:relative;
+}
+
+.THIS .logo-text
+{
+    position: relative;
+    color:#1D62A9;
+    font-size:12px;
+    margin-left:10px;
+}
+
+.THIS .icon-bar {
+    position: fixed;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+/* Style the icon bar links */
+.THIS .icon-bar a {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    transition: all 0.3s ease;
+    color: #1D62A9;
+    font-size: 20px;
+}
+
+/* Style the social media icons with color, if you want */
+.THIS .icon-bar a:hover {
+    background-color: #1D62A9;
+}
+
+.THIS .line{
+    position:relative;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+.THIS body {
+  margin: 0;
+}
+
+.THIS .top {
+  
+  height: calc(50vh - 10px);
+
+}
+
+.THIS .bottom {
+  
+  height: calc(50vh - 10px);
+}
+
+.THIS .line:after {
+    content:"";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    border-left: 2px dotted #1D62A9;
+    transform: translate(-50%);
+}
+
+.THIS .txtField{
+    border-radius: 20px;
+}
+
+.THIS .line_seperator1{
+    width:1px;
+    margin:0 auto;
+    border-left:1px dashed #1D62A9;
+    min-height:20px;
+    margin-top:5px;
+    margin-bottom:1px;
+}
+
+
+.THIS .line_seperator{
+    width:1px;
+    margin:0 auto;
+    border-left:1px dashed #1D62A9;
+    min-height:20px;
+    margin-top:1px;
+    margin-bottom:1px;
+}
+
+
+.THIS .slds-card__header1{
+    align-items:center;
+    justify-content:center;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #E2F0FF;
+   
+}
+
+.THIS .phone{
+    margin-right: -39px;
+    margin-left:0px;
+    opacity:0.5;
+    text-align:left;
+}
+
+.THIS .mail{
+    margin-right: -39px;
+    
+}
+.THIS #circle {
+    background: #15a5d5;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    
+    color:white;
+    text-align:center;
+    padding-top:10px;
+    
+}
+.THIS #circle.innerTEXT{
+    position:absolute;
+    top:30px;
+    left:30px;
+    color:white
+}
+.THIS .scrollHierarchy
+{
+    height: 90%;
+     overflow-y: scroll;
+    position:relative;
+    display:grid;
+    
+}
+.THIS .scrollHierarchy:hover
+{
+    overflow-y: scroll;
+}
+
+.THIS #scrollBar
+{
+  height: 100%;
+    overflow-y: hidden;
+}
+
+.THIS ::-webkit-scrollbar {
+  width: 6px;
+   z-index: 2;
+
+
+}
+
+/* Track */
+.THIS ::-webkit-scrollbar-track {
+  
+     border-radius: 10px;
+}
+ 
+/* Handle */
+.THIS ::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.THIS ::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+.THIS .exportMenu
+{
+    padding-top: 10px;
+    padding-left: 3px;
+    float:left;
+}
+.THIS .innerScroll
+{
+    display:grid;
+}
+.THIS .outerScroll
+{
+    display:grid;
+}
+
+.THIS .modal_container
+{
+    padding-top:0px;
+    max-width:100%;
+    margin-left: 0px;
+    height:107%;
+    width:100%;
+    position:absolute;
+    background-color:rgb(255, 255, 255);
+}
+
+.THIS .modal_header
+{
+    padding:0px;
+    background-color:aliceblue;
+    padding-top:15px;
+}
+
+.THIS .paddingRight
+{
+    margin-bottom:10px;
+}
+
+.THIS .more_reportees
+{
+    display:grid;
+    width:25%;
+    height:60px;
+}
+
+.THIS .main_more_reportees
+{
+    padding:0px;
+    margin:0px;
+    display:block;
+}
+
+.THIS .selected_user
+{
+    font-size:small;
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+.THIS .main_selected_user
+{
+    margin-top:12px;
+}
+
+.THIS .icon-width
+{
+    max-width:57%;
+}
